@@ -1,11 +1,13 @@
 import sqlite3
 
 
-def insert_posting(word, doc_path, f, indexes):
+def insert_posting(word, doc_path, f, indexes, neighbor_text):
     conn = sqlite3.connect('inverted-index.db')
     c = conn.cursor()
     if not word_exists(word):
         insert_word(word)
+    if not neighbor_exists(word, doc_path, indexes):
+        insert_neighbor(word, doc_path, indexes, neighbor_text)
     if doc_exists(doc_path, word):
         return
     query = '''
@@ -27,6 +29,30 @@ def insert_word(word):
     c.execute(query)
     conn.commit()
     conn.close()
+
+
+def insert_neighbor(word, path, index_position, text):
+    conn = sqlite3.connect('inverted-index.db')
+    c = conn.cursor()
+    query = '''
+            INSERT INTO Neighbors (word, documentName, indexPosition, neighborText) VALUES
+                ('{}', '{}', '{}', '{}');
+        '''.format(word, path, index_position, text)
+    c.execute(query)
+    conn.commit()
+    conn.close()
+
+
+def neighbor_exists(word, path, index_position):
+    conn = sqlite3.connect('inverted-index.db')
+    c = conn.cursor()
+    query = '''
+                SELECT * FROM Neighbors WHERE word = '{}' and documentName = '{}' and indexPosition = '{}';
+            '''.format(word, path, index_position)
+    cursor = c.execute(query)
+    empty = cursor.fetchall().__len__() != 0
+    conn.close()
+    return empty
 
 
 def word_exists(word):
@@ -77,4 +103,16 @@ def recreate_index():
             FOREIGN KEY (word) REFERENCES IndexWord(word)
         );
     ''')
+    c.execute('''
+            DROP TABLE Neighbors
+        ''')
+    c.execute('''create table Neighbors
+     (
+       word text not null,
+       documentName text not null,
+       indexPosition text not null,
+       neighborText text,
+       primary key(word, documentName, indexPosition),
+       foreign key (word, documentName) references Posting(word, documentName)
+     ); ''')
     conn.close()
