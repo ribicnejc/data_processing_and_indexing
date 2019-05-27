@@ -8,6 +8,7 @@ docs = [s1, s2]
 db_manager.recreate_index()
 for word in words:
     for doc in docs:
+        re.findall("([a+])", "abc")
         indexes = [m.start() for m in re.finditer(word, doc[1])]
         if len(indexes) != 0:
             db_manager.insert_posting(word, doc[0], indexes.__len__(), str(indexes).strip("[]"))
