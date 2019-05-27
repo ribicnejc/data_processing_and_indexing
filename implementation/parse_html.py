@@ -51,6 +51,7 @@ def print_html(path):
     low_tokens = [word.lower() for word in tokens]
 
     # remove nonwords with re and stopword using a list
+    # posting type:    word: [(index, neighbour), ...]
     posting = {}
 
     for index, word in enumerate(low_tokens):
@@ -59,11 +60,12 @@ def print_html(path):
             posting.setdefault(word, [])
             posting[word].append((index, get_neighbours(low_tokens, index)))
 
-    for key, val in posting.items():
-        print(key, end=": ")
-        for idx in val:
-            print(str(idx), end=", ")
-        print()
+    #for key, val in posting.items():
+    #    print(key, end=": ")
+    #    for idx in val:
+    #        print(str(idx), end=", ")
+    #    print()
 
+    return posting
 
 print_html("data/evem.gov.si/evem.gov.si.1.html")
