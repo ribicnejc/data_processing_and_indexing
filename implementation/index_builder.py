@@ -16,4 +16,6 @@ def insert_to_index(word, path, neighbor_text, frequency, indexes):
 
 
 clear_database()
-insert_to_index("song", "test.html", "singing a song with someone", 3, "[1, 2, 3]")
+insert_to_index("song", "test.html", "singing a song with someone", 3, "1, 2, 3")
+insert_to_index("song2", "test.html", "singing a song with someone", 3, "1, 2, 3")
+insert_to_index("song2", "test.html2", "singing a song with someone", 3, "1, 2, 3")
