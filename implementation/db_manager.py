@@ -82,17 +82,17 @@ def doc_exists(doc, word):
 def recreate_index():
     conn = sqlite3.connect('inverted-index.db')
     c = conn.cursor()
-    c.execute('''
-            DROP TABLE IndexWord
-        ''')
+    # c.execute('''
+    #         DROP TABLE IF IndexWord
+    #     ''')
     c.execute('''
         CREATE TABLE IndexWord (
             word TEXT PRIMARY KEY
         );
     ''')
-    c.execute('''
-            DROP TABLE Posting
-        ''')
+    # c.execute('''
+    #         DROP TABLE Posting
+    #     ''')
     c.execute('''
         CREATE TABLE Posting (
             word TEXT NOT NULL,
@@ -103,9 +103,9 @@ def recreate_index():
             FOREIGN KEY (word) REFERENCES IndexWord(word)
         );
     ''')
-    c.execute('''
-            DROP TABLE Neighbors
-        ''')
+    # c.execute('''
+    #         DROP TABLE Neighbors
+    #     ''')
     c.execute('''create table Neighbors
      (
        word text not null,
