@@ -63,12 +63,13 @@ def print_html(path):
             posting[word].append((index, get_neighbours(low_tokens, index)))
 
     for key, val in posting.items():
-        #print(key, end=": ")
+        # print(key, end=": ")
         for idx, neigh in val:
-            insert_to_index(key, path, neigh, str(len(val), str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
-            #print("(" + str(idx) + ", " + neigh + ")", end=", ")
-        #print("LEN: " + str(len(val)))
-        #print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
+            insert_to_index(key, path, neigh,
+                            str(len(val), str(reduce(lambda a, b: a + str(b) + ",", map(lambda x: x[0], val), ""))[:-1]))
+            # print("(" + str(idx) + ", " + neigh + ")", end=", ")
+            # print("LEN: " + str(len(val)))
+            # print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
 
+            # print_html("data/evem.gov.si/evem.gov.si.1.html")
 
-#print_html("data/evem.gov.si/evem.gov.si.1.html")
