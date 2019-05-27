@@ -65,8 +65,8 @@ def print_html(path):
     for key, val in posting.items():
         # print(key, end=": ")
         for idx, neigh in val:
-            insert_to_index(key, path, neigh,
-                            str(len(val), str(reduce(lambda a, b: a + str(b) + ",", map(lambda x: x[0], val), ""))[:-1]))
+            insert_to_index(key, path, neigh, str(len(val)), str(list(map(lambda x: x[0], val))).strip("[ ]"))
+            # str(reduce(lambda a, b: a + str(b) + ",", map(lambda x: x[0], val), ""))[:-1]
             # print("(" + str(idx) + ", " + neigh + ")", end=", ")
             # print("LEN: " + str(len(val)))
             # print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
