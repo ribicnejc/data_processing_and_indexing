@@ -16,6 +16,7 @@ c.execute('''
         documentName TEXT NOT NULL,
         frequency INTEGER NOT NULL,
         indexes TEXT NOT NULL,
+        neighbours TEXT NOT NULL,
         PRIMARY KEY(word, documentName),
         FOREIGN KEY (word) REFERENCES IndexWord(word)
     );

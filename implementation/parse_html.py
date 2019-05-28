@@ -1,12 +1,10 @@
 import html2text
 from nltk.tokenize import TweetTokenizer
 import re
-from _functools import reduce
-from implementation.index_builder import insert_to_index
 
 
 class Parser:
-    def __init__(self):
+    def __init__(self, dbManeger):
         self.html_cleaner = html2text.HTML2Text()
         self.html_cleaner.ignore_emphasis = True
         self.html_cleaner.ignore_images = True
@@ -18,13 +16,13 @@ class Parser:
 
         self.tokens = []
 
+        self.dbManager = dbManeger
 
     def build_stopwords(self):
         with open("data/slovenian-stopwords.txt", "r", encoding="utf-8") as stopword_file:
             stopword_file_contents = stopword_file.readlines()
         for stopword in stopword_file_contents:
             self.stopwords.add(stopword.strip())
-
 
     def get_neighbours(self, index):
         start = index - 3
@@ -43,8 +41,9 @@ class Parser:
 
         return neighbours.strip()
 
-
     def print_html(self, path):
+        print("Parsing document " + path)
+
         # get file content
         with open(path, "r", encoding="utf-8") as content_file:
             content = content_file.read()
@@ -70,14 +69,15 @@ class Parser:
 
         # insert into db
         for key, val in posting.items():
-            print(key)
+            # print(key)
             indices = str(list(map(lambda x: x[0], val))).strip("[]").replace(" ", "")
-            print(indices)
+            # print(indices)
             neighbourhood = "\n".join(list(map(lambda x: x[1].strip(), val)))
-            print(neighbourhood + "\n")
+            # print(neighbourhood + "\n")
+            self.dbManager.insert_posting(key, path, len(val), indices, neighbourhood)
 
-        print(len(posting))
-
+        num_words = len(posting)
+        print(str(num_words) + " words in document. \n")
 
 
 
@@ -91,8 +91,8 @@ class Parser:
             # print("LEN: " + str(len(val)))
             # print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
 
-parser = Parser()
-parser.print_html("data/evem.gov.si/evem.gov.si.1.html")
+#parser = Parser()
+#parser.print_html("data/evem.gov.si/evem.gov.si.1.html")
 
 
 
