@@ -1,4 +1,4 @@
-from implementation.db_manager import dbManager
+from indexer.db_manager import dbManager
 import time
 
 

@@ -1,6 +1,6 @@
 from os import listdir
 from os.path import isdir, isfile, join
-from implementation.parse_html import Parser
+from indexer.parse_html import Parser
 import re
 import time
 
