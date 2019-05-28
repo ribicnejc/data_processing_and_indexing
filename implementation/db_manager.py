@@ -38,31 +38,31 @@ class DBManager:
         self.conn.commit()
         self.conn.close()
 
-        def word_exists(self, word):
-            query = '''
-                        SELECT * FROM IndexWord WHERE word = '{}';
-                    '''.format(word)
-            cursor = self.cur.execute(query)
-            empty = cursor.fetchall().__len__() != 0
-            return empty
-
-        def insert_word(self, word):
-            query = '''
-                    INSERT INTO IndexWord (word) VALUES
-                        ('{}');
+    def word_exists(self, word):
+        query = '''
+                    SELECT * FROM IndexWord WHERE word = '{}';
                 '''.format(word)
-            self.cur.execute(query)
-            self.conn.commit()
+        cursor = self.cur.execute(query)
+        empty = cursor.fetchall().__len__() != 0
+        return empty
 
-        def insert_posting(self, word, doc_path, freq, indexes, neighbor_text):
-            if not word_exists(word):
-                self.insert_word(word)
-            query = '''
-                INSERT INTO Posting (word, documentName, frequency, indexes, neighbourhood) VALUES
-                    ('{}', '{}', {}, '{}', '{}');
-            '''.format(word, doc_path, freq, indexes, neighbor_text)
-            self.cur.execute(query)
-            self.conn.commit()
+    def insert_word(self, word):
+        query = '''
+                INSERT INTO IndexWord (word) VALUES
+                    ('{}');
+            '''.format(word)
+        self.cur.execute(query)
+        self.conn.commit()
+
+    def insert_posting(self, word, doc_path, freq, indexes, neighbor_text):
+        if not self.word_exists(word):
+            self.insert_word(word)
+        query = '''
+            INSERT INTO Posting (word, documentName, frequency, indexes, neighbourhood) VALUES
+                ('{}', '{}', {}, '{}', '{}');
+        '''.format(word, doc_path, freq, indexes, neighbor_text)
+        self.cur.execute(query)
+        self.conn.commit()
 
 
 dbManager = DBManager()
