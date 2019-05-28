@@ -54,22 +54,36 @@ def print_html(path):
 
     # remove nonwords with re and stopword using a list
     # posting type:    word: [(index, neighbour), ...]
+    # build a dict
     posting = {}
-
     for index, word in enumerate(low_tokens):
         if re.match("[a-zA-Z0-9][a-zA-Z0-9-\.]+", word) and word not in stopwords:
             # print(str(index) + ": " + word)
             posting.setdefault(word, [])
             posting[word].append((index, get_neighbours(low_tokens, index)))
 
+    # insert into db
     for key, val in posting.items():
+        print(key)
+        indices = str(list(map(lambda x: x[0], val))).strip("[]").replace(" ", "")
+        print(indices)
+        neighbourhood = "\n".join(list(map(lambda x: x[1].strip(), val)))
+        print(neighbourhood + "\n")
+
+    print(len(posting))
+
+
+
+
+
+
         # print(key, end=": ")
-        for idx, neigh in val:
-            insert_to_index(key, path, neigh, str(len(val)), str(list(map(lambda x: x[0], val))).strip("[ ]"))
+        #         for idx, neigh in val:
+            #            insert_to_index(key, path, neigh, str(len(val)), str(list(map(lambda x: x[0], val))).strip("[ ]"))
             # str(reduce(lambda a, b: a + str(b) + ",", map(lambda x: x[0], val), ""))[:-1]
             # print("(" + str(idx) + ", " + neigh + ")", end=", ")
             # print("LEN: " + str(len(val)))
             # print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
 
-            # print_html("data/evem.gov.si/evem.gov.si.1.html")
+print_html("data/evem.gov.si/evem.gov.si.1.html")
 
