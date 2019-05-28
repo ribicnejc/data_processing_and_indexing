@@ -81,19 +81,12 @@ class Parser:
         print(str(num_words) + " words in document. \n")
 
 
+    def get_clean_html(self, path):
+        # get file content
+        with open(path, "r", encoding="utf-8") as content_file:
+            content = content_file.read()
 
-
-
-        # print(key, end=": ")
-        #         for idx, neigh in val:
-            #            insert_to_index(key, path, neigh, str(len(val)), str(list(map(lambda x: x[0], val))).strip("[ ]"))
-            # str(reduce(lambda a, b: a + str(b) + ",", map(lambda x: x[0], val), ""))[:-1]
-            # print("(" + str(idx) + ", " + neigh + ")", end=", ")
-            # print("LEN: " + str(len(val)))
-            # print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
-
-#parser = Parser("test")
-#parser.print_html("data\e-prostor.gov.si\e-prostor.gov.si.121.html")
-
+        # get text from html
+        return self.html_cleaner.handle(content)
 
 

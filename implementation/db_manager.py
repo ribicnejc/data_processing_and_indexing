@@ -6,8 +6,6 @@ class DBManager:
         self.conn = conn = sqlite3.connect('inverted-index.db')
         self.cur = conn.cursor()
 
-        self.create_the_database()
-
     def create_the_database(self):
         self.cur.execute('''	
             DROP TABLE IF EXISTS IndexWord;
@@ -36,6 +34,11 @@ class DBManager:
             ''')
 
         self.conn.commit()
+
+    def find_word(self, word):
+        query = "SELECT * FROM Posting WHERE word = ? ORDER BY frequency DESC;"
+        cursor = self.cur.execute(query, (word,))
+        return cursor.fetchmany(10)
 
     def word_exists(self, word):
         query = "SELECT * FROM IndexWord WHERE word = ?;"

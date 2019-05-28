@@ -4,6 +4,7 @@ from implementation.parse_html import Parser
 from implementation.db_manager import dbManager
 
 parser = Parser(dbManager)
+dbManager.create_the_database()
 
 doc_parsed = 0
 
