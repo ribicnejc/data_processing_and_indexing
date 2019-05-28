@@ -9,6 +9,7 @@ doc_parsed = 0
 
 
 def read_files(path):
+    global doc_parsed
     for f in listdir(path):
         if isfile(join(path, f)):
             if f.endswith(".html"):
