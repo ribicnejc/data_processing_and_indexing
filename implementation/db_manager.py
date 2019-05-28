@@ -46,16 +46,17 @@ class DBManager:
     def insert_word(self, word):
         query = "INSERT INTO IndexWord (word) VALUES (?);"
         self.cur.execute(query, (word,))
-        self.conn.commit()
+        #self.conn.commit()
 
     def insert_posting(self, word, doc_path, freq, indexes, neighbor_text):
         if not self.word_exists(word):
             self.insert_word(word)
         query = "INSERT INTO Posting (word, documentName, frequency, indexes, neighbourhood) VALUES(?, ?, ?, ?, ?);"
         self.cur.execute(query, (word, doc_path, freq, indexes, neighbor_text))
-        self.conn.commit()
+        #self.conn.commit()
 
     def close_db(self):
+        self.conn.commit()
         self.conn.close()
 
 
