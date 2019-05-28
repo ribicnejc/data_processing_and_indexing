@@ -69,11 +69,11 @@ class Parser:
 
         # insert into db
         for key, val in posting.items():
-            # print(key)
+            #print(key)
             indices = str(list(map(lambda x: x[0], val))).strip("[]").replace(" ", "")
-            # print(indices)
+            #print(indices)
             neighbourhood = "\n".join(list(map(lambda x: x[1].strip(), val)))
-            # print(neighbourhood + "\n")
+            #print(neighbourhood + "\n")
             self.dbManager.insert_posting(key, path, len(val), indices, neighbourhood)
 
         num_words = len(posting)
@@ -91,8 +91,8 @@ class Parser:
             # print("LEN: " + str(len(val)))
             # print(str(reduce(lambda a,b: a+str(b)+",", map(lambda x: x[0], val), ""))[:-1])
 
-#parser = Parser()
-#parser.print_html("data/evem.gov.si/evem.gov.si.1.html")
+#parser = Parser("test")
+#parser.print_html("data\e-prostor.gov.si\e-prostor.gov.si.121.html")
 
 
 
