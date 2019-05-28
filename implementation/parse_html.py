@@ -13,6 +13,7 @@ class Parser:
 
         self.tknzr = TweetTokenizer()
         self.stopwords = set()
+        self.build_stopwords()
 
         self.tokens = []
 
