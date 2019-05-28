@@ -36,7 +36,6 @@ class DBManager:
             ''')
 
         self.conn.commit()
-        self.conn.close()
 
     def word_exists(self, word):
         query = '''
@@ -63,6 +62,9 @@ class DBManager:
         '''.format(word, doc_path, freq, indexes, neighbor_text)
         self.cur.execute(query)
         self.conn.commit()
+
+    def close_db(self):
+        self.conn.close()
 
 
 dbManager = DBManager()

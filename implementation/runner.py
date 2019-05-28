@@ -16,3 +16,4 @@ def read_files(path):
 
 
 read_files("data")
+dbManager.close_db()
